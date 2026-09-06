@@ -1,0 +1,15 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.9.2
+pydantic-settings==2.5.2
+sqlalchemy==2.0.35
+psycopg[binary]==3.2.2
+alembic==1.13.3
+transformers==4.45.2
+peft==0.13.2
+accelerate==0.34.2
+bitsandbytes==0.44.1
+safetensors==0.4.5
+sentencepiece==0.2.0
+numpy==1.26.4
+requests==2.32.3

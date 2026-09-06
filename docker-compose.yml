@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: llm
+      POSTGRES_PASSWORD: llm
+      POSTGRES_DB: llm
+    ports:
+      - "5511:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U llm -d llm"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    ports:
+      - "8095:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg://llm:llm@postgres:5432/llm
+      CORS_ORIGINS: http://localhost:5250
+      MODEL_VERSION: qwen2.5-1.5b-support-lora-v1
+      # See README: Docker Desktop on Windows does not reliably pass the GPU through to
+      # containers, so the containerized API runs in mock mode by default. Run backend/app
+      # directly on the host (in the venv) for real GPU-backed generation - see README "Running
+      # inference with the real model".
+      USE_REAL_MODEL: "false"
+    volumes:
+      - ./model-artifacts:/app/model-artifacts:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8095}
+    ports:
+      - "5250:80"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
