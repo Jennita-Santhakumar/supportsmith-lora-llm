@@ -1,5 +1,7 @@
 # Domain-Tuned Support LLM (LoRA + Quantization Platform)
 
+> **Maintained by [Jennita S](https://github.com/Jennita-Santhakumar)** · [LinkedIn](https://linkedin.com/in/jennitas) · jennitasanthakumar0@gmail.com
+
 [![CI](https://github.com/KabileshRajaselvan/domain-tuned-support-llm-lora-quantization-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/KabileshRajaselvan/domain-tuned-support-llm-lora-quantization-platform/actions/workflows/ci.yml)
 
 A real QLoRA (4-bit) fine-tune of **Qwen2.5-1.5B-Instruct** on a customer-support instruction
@@ -221,3 +223,7 @@ pytest --cov=app --cov-report=term-missing
 Tests force `USE_REAL_MODEL=false` (no GPU/model download needed) and run against a real
 Postgres - either a local `docker compose up postgres` or CI's Postgres service container.
 `db_session`/`client` fixtures skip integration tests cleanly if no Postgres is reachable.
+
+## Credits
+
+Developed by Kabilesh Rajaselvan with contributions from Jennita S.
